@@ -1,5 +1,6 @@
 import { Box, Grid, Link, Typography } from "@mui/material"
 import { Link as RouterLink } from "react-router-dom";
+import { ParticleBackground } from "../layout/particleBackground";
 
 export const Inicio = () => {
     return (
@@ -12,6 +13,7 @@ export const Inicio = () => {
             <Grid
                 item
                 sm={6}
+                xs={12}
                 className="inicio"
             >
                 <Grid
@@ -23,14 +25,26 @@ export const Inicio = () => {
                     height="100%"
                     className="inicioContainer"
                 >
-                    <div className="profitCash">Profit Cash</div>
-                    <div className="invierteConNosotros">Invierte con nosotros</div>
+                    <Typography
+                        fontWeight={700}
+                        fontSize={{ xs: 40, sm: 66 }}
+                        sx={{ color: "#1DC5A3" }}
+                    >
+                        Profit Cash
+                    </Typography>
+                    <Typography
+                        fontWeight={400}
+                        fontSize={{ xs: "1.5rem", sm: 26 }}
+                        sx={{ color: "white" }}
+                    >
+                        Invierte con nosotros
+                    </Typography>
                     <Grid
                         display="flex"
                         my={3}
                     >
                         <Link
-                            display={{ xs: 'none', sm: 'flex' }}
+                            display={{ sm: 'flex' }}
                             mx={2}
                             className="singIn"
                             component={RouterLink}
@@ -45,9 +59,11 @@ export const Inicio = () => {
                             color='#1DC5A3'
                             to="/auth/register"
                             mx={2}
-                            display={{ xs: 'none', sm: 'flex' }}
+                            display={{ sm: 'flex' }}
                             className="singUp"
-                            underline="hover">
+                            underline="hover"
+                            bgcolor={{ xs: "rgba(45, 62, 80, 0.6)", sm: "rgba(29, 197, 163, 0.1)" }}
+                        >
                             <Typography fontSize="12px" px="2px">REGISTRAR</Typography>
                         </Link>
                     </Grid>
@@ -56,11 +72,13 @@ export const Inicio = () => {
             <Grid
                 item
                 sm={6}
+                xs={0}
                 className="logo"
             >
             </Grid>
             <Box
                 className="namePageContainer"
+                display={{ xs: "none", sm: "block" }}
             >
                 <Typography className="namePage">HOME</Typography>
             </Box>

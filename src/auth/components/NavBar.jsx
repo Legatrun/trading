@@ -45,6 +45,7 @@ export const NavBar = () => {
                     <Grid
                         container
                         justifyContent="flex-end"
+                        display={{ xs: "none", sm: "flex" }}
                     >
                         <Link
                             display={{ xs: 'none', sm: 'flex' }}
@@ -64,7 +65,8 @@ export const NavBar = () => {
                             mx={2}
                             display={{ xs: 'none', sm: 'flex' }}
                             className="singUp"
-                            underline="hover">
+                            underline="hover"
+                        >
                             <Typography fontSize="12px" px="2px">REGISTRAR</Typography>
                         </Link>
                         <Grid
@@ -100,52 +102,32 @@ export const NavBar = () => {
                         justifyContent="space-around"
                         sx={{
                             textAlign: 'center',
-                            backgroundColor: "#353535",
+                            backgroundColor: "rgba(0,0,0,0.9)",
                             height: "100%"
                         }}
                     >
-                        <Typography variant="h6" sx={{ my: 2 }} color="white">
-                            Lions F1
+                        <Typography variant="h4" sx={{ my: 2 }} color="white">
+                            <strong>Profit Cash</strong>
                         </Typography>
                         <Link
+                            mx={2}
+                            className="singIn"
                             component={RouterLink}
-                            color="white"
-                            to="/"
-                            underline="none"
+                            to="/auth/login"
+                            color='white'
+                            underline="hover"
                         >
-                            Inicio
+                            <Typography fontSize="12px" px="2px">INGRESAR</Typography>
                         </Link>
                         <Link
                             component={RouterLink}
-                            color="white"
-                            to="/nosotros"
-                            underline="none"
+                            color='white'
+                            to="/auth/register"
+                            mx={2}
+                            className="singUp"
+                            underline="hover"
                         >
-                            Nosotros
-                        </Link>
-                        <Link
-                            component={RouterLink}
-                            color="white"
-                            to="/servicios"
-                            underline="none"
-                        >
-                            Servicios
-                        </Link>
-                        <Link
-                            component={RouterLink}
-                            color="white"
-                            to="/clientes"
-                            underline="none"
-                        >
-                            Clientes
-                        </Link>
-                        <Link
-                            component={RouterLink}
-                            color="white"
-                            to="/contacto"
-                            underline="none"
-                        >
-                            Contacto
+                            <Typography fontSize="12px" px="2px">REGISTRAR</Typography>
                         </Link>
                     </Grid>
                 </Drawer>

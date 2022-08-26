@@ -11,13 +11,15 @@ import { useMemo } from 'react';
 const formData = {
   email: '',
   password: '',
-  displayName: ''
+  displayName: '',
+  phoneNumber: ''
 }
 
 const formValidations = {
   email: [(value) => value.includes('@'), 'El correo debe tener una @.'],
   password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras.'],
   displayName: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
+  phoneNumber: [(value) => value.length == 8, 'El número debe tener 8 digitos.'],
 }
 
 export const RegisterPage = () => {
@@ -30,14 +32,17 @@ export const RegisterPage = () => {
   const isCheckingAuthentication = useMemo(() => status === 'checking', [status])
 
   const {
-    formState, displayName, email, password, onInputChange,
-    isFormValid, displayNameValid, emailValid, passwordValid
+    formState, displayName, email, password, phoneNumber, onInputChange,
+    isFormValid, displayNameValid, emailValid, passwordValid, phoneNumberValid
   } = useForm(formData, formValidations)
 
   const onSubmit = (event) => {
     event.preventDefault();
     setFormSubmitted(true)
     if (!isFormValid) return;
+
+
+    console.log("enviando el formState desde registerPage", formState)
     dispatch(startCreatingUserWithEmailPassword(formState))
   }
 
@@ -67,6 +72,7 @@ export const RegisterPage = () => {
               value={displayName}
               onChange={onInputChange}
               error={!!displayNameValid && formSubmitted}
+              helperText={displayNameValid}
             />
           </Grid>
 
@@ -81,6 +87,7 @@ export const RegisterPage = () => {
               value={email}
               onChange={onInputChange}
               error={!!emailValid && formSubmitted}
+              helperText={emailValid}
             />
           </Grid>
 
@@ -94,6 +101,21 @@ export const RegisterPage = () => {
               value={password}
               onChange={onInputChange}
               error={!!passwordValid && formSubmitted}
+              helperText={passwordValid}
+            />
+          </Grid>
+
+          <Grid item xs={12} sx={{ mt: 2 }} className="textField">
+            <TextField
+              label="Número de celular"
+              type="number"
+              placeholder="Número de celular"
+              fullWidth
+              name="phoneNumber"
+              value={phoneNumber}
+              onChange={onInputChange}
+              error={!!phoneNumberValid && formSubmitted}
+              helperText={phoneNumberValid}
             />
           </Grid>
 

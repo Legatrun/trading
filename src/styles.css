@@ -5,6 +5,14 @@
     font-family: 'Montserrat, sans-serif';
 }
 
+:root {
+    --bg: #1e2345;
+    --violet: #2d3e50;
+    ---pink: #d60087;
+    --turquoise: #1DC5A3;
+    ---morado: #2e008b;
+}
+
 ::-webkit-scrollbar {
     width: 0;
 }
@@ -69,6 +77,9 @@
 
 
 /* Header */
+.appbar {
+    position: relative;
+}
 
 .swiper {
     width: 100vw;
@@ -130,18 +141,6 @@
 }
 
 /* INICIO */
-/* 
-.inicioContainer {
-    background-color: black;
-} */
-
-.profitCash {
-    font-size: 70px;
-}
-
-.invierteConNosotros {
-    font-size: 30px;
-}
 
 .inicio {
     background-image: radial-gradient(rgba(255, 255, 255, 0.1) 30%, transparent 0);
@@ -164,7 +163,7 @@
     height: 1px;
     background: #fff;
     position: absolute;
-    left: 69px;
+    left: 130%;
     top: 12px;
 }
 
@@ -175,7 +174,179 @@
     background: #fff;
     position: absolute;
     top: 12px;
-    right: 75px;
+    right: 130%;
+}
+
+/* Historia Page */
+/* .historia {
+    border-radius: 25px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+} */
+
+.titleHistoria {
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--turquoise);
+}
+
+
+.imageBitcoin {
+    position: relative;
+    height: 390px;
+    background-image: url(https://i.imgur.com/YKRcvgq.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.containerBlur::before,
+.containerBlur::after {
+    content: "";
+    position: absolute;
+    left: -0.5%;
+    top: -0.5%;
+    border-radius: 30px;
+    background: linear-gradient(100deg, var(--violet) 25%, var(--turquoise) 50%, var(--violet) 75%);
+    background-size: 300%;
+    width: calc(101%);
+    height: calc(101%);
+    z-index: -1;
+    animation: gradient 7s ease infinite;
+}
+
+.containerBlur::after {
+    filter: brightness(1.4);
+    filter: drop-shadow(16px 16px 20px rgb(248, 220, 97));
+    filter: blur(20px);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0 200%;
+    }
+
+    50% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: 0 330%;
+    }
+
+}
+
+.imageVision {
+    position: relative;
+    height: 390px;
+    background-image: url(https://i.imgur.com/NJPZFkn.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.imageMision {
+    position: relative;
+    height: 390px;
+    background-image: url(https://i.imgur.com/dEPLhNP.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+span {
+    font-weight: bold;
+}
+
+.historiaContent {
+    font-weight: 700;
+    display: flex;
+    color: #1b2630;
+}
+
+.historia {
+    font-weight: 700;
+    border-radius: 0;
+    margin: 0 15px;
+    color: #1b2630;
+}
+
+/* REFERIDOS PAGE */
+
+.cardReferido {
+    text-align: center;
+    border-radius: 50px;
+    height: 110px;
+    background: var(--turquoise);
+    box-shadow: 0 0 10px var(--violet), 0 0 40px var(--turquoise), 0 0 80px var(--violet);
+}
+
+.cardReferidoPar {
+    text-align: center;
+    border-radius: 50px;
+    height: 110px;
+    background: var(---morado);
+    box-shadow: 0 0 10px var(--violet), 0 0 40px var(---morado), 0 0 80px var(--violet);
+}
+
+/* EMPEZAR CARD */
+
+.empezarCard,
+.invitarCard,
+.crearCard {
+    position: relative;
+    padding: 50px 0 0 20px;
+    background-image: url(https://i.imgur.com/HA3iaZJ.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-size: 15px;
+
+    color: #00ffe7;
+}
+
+.invitarCard {
+    background-image: url(https://i.imgur.com/zgk6FXJ.png);
+}
+
+.crearCard {
+    background-image: url(https://i.imgur.com/vXiwkNc.png);
+}
+
+.containerBlurEmpezar::before,
+.containerBlurEmpezar::after {
+    content: "";
+    position: absolute;
+    left: 5%;
+    top: 0%;
+    border-radius: 40px;
+    background: linear-gradient(100deg, var(--violet) 25%, var(--turquoise) 50%, var(--violet) 75%);
+    background-size: 300%;
+    width: calc(90%);
+    height: calc(100%);
+    z-index: -1;
+    animation: gradient 7s ease infinite;
+}
+
+.containerBlurEmpezar::after {
+    filter: brightness(1.4);
+    filter: drop-shadow(16px 16px 20px rgb(248, 220, 97));
+    filter: blur(20px);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0 200%;
+    }
+
+    50% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: 0 330%;
+    }
+
 }
 
 /* LOGIN PAGE */
@@ -183,8 +354,8 @@
     position: relative;
     color: white;
     z-index: 0;
-    width: 400px;
-    height: 414px;
+    width: 350px;
+    height: auto;
     border-radius: 20px;
     overflow: hidden;
     padding: 15px;
@@ -218,7 +389,6 @@
     width: calc(100% - 12px);
     height: calc(100% - 12px);
     background-color: rgba(0, 0, 0, 1);
-    ;
     border-radius: 16px;
 }
 
@@ -252,12 +422,12 @@
 /* NAVBAR */
 
 .menuOutlined {
-    display: block;
     position: absolute;
-    left: 0%;
+    right: -35%;
 }
 
 .tollbar {
+    position: relative;
     background: rgb(45, 62, 80);
     background: linear-gradient(90deg, rgba(45, 62, 80, 1) 30%, rgba(27, 188, 155, 1) 50%, rgba(45, 62, 80, 1) 70%);
     padding: 10px 20px;

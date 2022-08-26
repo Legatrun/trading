@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material"
 import { AuthLayout } from "../layout/AuthLayout"
-import { Empezar, Historia, Mapa, Mision, Servicios, Vision } from "./"
+import { Empezar, Historia, Referidos, Mision, Vision } from "./"
 import { React } from 'react';
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -37,8 +37,7 @@ export const Home = () => {
                     <SwiperSlide><Historia /></SwiperSlide>
                     <SwiperSlide><Vision /></SwiperSlide>
                     <SwiperSlide><Mision /></SwiperSlide>
-                    <SwiperSlide><Mapa /></SwiperSlide>
-                    <SwiperSlide><Servicios /></SwiperSlide>
+                    <SwiperSlide><Referidos /></SwiperSlide>
                     <SwiperSlide><Empezar /></SwiperSlide>
                 </Swiper>
             </Grid>

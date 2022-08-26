@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Empezar, Historia, Home, Inicio, LoginPage, Mapa, Mision, RegisterPage, Servicios, Vision } from '../pages';
+import { Empezar, Historia, Home, Inicio, LoginPage, Mision, Referidos, RegisterPage, Vision } from '../pages';
 
 
 export const AuthRoutes = () => {
@@ -10,10 +10,9 @@ export const AuthRoutes = () => {
       <Route path="home" element={<Home />} />
       <Route path="inicio" element={<Inicio />} />
       <Route path="login" element={<LoginPage />} />
-      <Route path="mapa" element={<Mapa />} />
+      <Route path="mapa" element={<Referidos />} />
       <Route path="mision" element={<Mision />} />
       <Route path="register" element={<RegisterPage />} />
-      <Route path="servicios" element={<Servicios />} />
       <Route path="vision" element={<Vision />} />
 
       <Route path='/*' element={<Navigate to="/auth/home" />} />

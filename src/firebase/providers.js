@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, PhoneAuthProvider, RecaptchaVerifier, signInWithEmailAndPassword, signInWithPopup, updatePhoneNumber, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from './config'
 
 const googleProvider = new GoogleAuthProvider()
@@ -9,12 +9,12 @@ export const singInWithGoogle = async () => {
         const result = await signInWithPopup(FirebaseAuth, googleProvider);
         // const credentials = GoogleAuthProvider.credentialFromResult(result)
 
-        const { displayName, email, photoURL, uid } = result.user
+        const { displayName, email, photoURL, uid, phoneNumber } = result.user
 
         return {
             ok: true,
 
-            displayName, email, photoURL, uid
+            displayName, email, photoURL, uid, phoneNumber
         }
 
     } catch (error) {
@@ -31,20 +31,27 @@ export const singInWithGoogle = async () => {
     }
 }
 
-export const registeruserWithEmailPassword = async ({ email, password, displayName }) => {
+export const registeruserWithEmailPassword = async ({ email, password, displayName, phoneNumber }) => {
+
 
     try {
 
         const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password)
         const { uid, photoURL } = resp.user;
 
+
         // "FirebaseAuth.currentUser" es el actual usuario
+
+        console.log("actual", FirebaseAuth.currentUser)
+
         await updateProfile(FirebaseAuth.currentUser, { displayName });
+        await updateProfile(FirebaseAuth.currentUser, { photoURL: phoneNumber });
+        // await updatePhoneNumber(FirebaseAuth.currentUser, { phoneNumber });
 
 
         return {
             ok: true,
-            uid, photoURL, email, displayName
+            uid, photoURL: phoneNumber, email, displayName, phoneNumber
         }
 
     } catch (error) {
@@ -62,11 +69,13 @@ export const loginWithEmailPassword = async ({ email, password }) => {
     try {
 
         const resp = await signInWithEmailAndPassword(FirebaseAuth, email, password)
-        const { uid, photoURL, displayName } = resp.user;
+        const { uid, photoURL, displayName, phoneNumber } = resp.user;
+
+        console.log(resp.user)
 
         return {
             ok: true,
-            uid, photoURL, displayName
+            uid, photoURL, displayName, phoneNumber
         }
 
     } catch (error) {
