@@ -58,7 +58,6 @@ export const tradingSlice = createSlice({
         },
         deleteNoteById: (state, action) => {
             state.active = null
-            console.log(action)
             state.notes = state.notes.filter(note => note.id !== action.payload)
         },
     }

@@ -27,13 +27,6 @@ export const NavBar = () => {
                 className="appbar"
             >
                 <Toolbar className="tollbar">
-                    <Link
-                        component={RouterLink}
-                        to="/auth/home"
-                    >
-                        <img src="https://i.imgur.com/cWaNLFy.png" alt="logo" width={"180px"}
-                            height={"43px"} />
-                    </Link>
                     <IconButton
                         color="inherit"
                         onClick={handleDrawerToggle}

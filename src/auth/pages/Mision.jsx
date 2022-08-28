@@ -50,13 +50,18 @@ export const Mision = () => {
                     >
                         MISIÓN
                     </Typography>
-                    <p className="historiaParrafo" >
+                    <Typography
+                        fontFamily="Raleway"
+                        fontWeight={{ xs: 300, sm: 400 }}
+                        fontSize={{ xs: 18, sm: 25 }}
+                        sx={{ color: "white" }}
+                    >
                         <strong>Ayudar</strong> al mayor número de personas
                         <br />
                         <strong>e</strong>n su crecimiento tanto <strong>financiero</strong>
                         <br />
                         <strong>c</strong>omo en lo <strong>personal</strong>
-                    </p>
+                    </Typography>
                 </Grid>
             </Grid>
             <Box

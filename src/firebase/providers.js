@@ -42,7 +42,6 @@ export const registeruserWithEmailPassword = async ({ email, password, displayNa
 
         // "FirebaseAuth.currentUser" es el actual usuario
 
-        console.log("actual", FirebaseAuth.currentUser)
 
         await updateProfile(FirebaseAuth.currentUser, { displayName });
         await updateProfile(FirebaseAuth.currentUser, { photoURL: phoneNumber });
@@ -70,8 +69,6 @@ export const loginWithEmailPassword = async ({ email, password }) => {
 
         const resp = await signInWithEmailAndPassword(FirebaseAuth, email, password)
         const { uid, photoURL, displayName, phoneNumber } = resp.user;
-
-        console.log(resp.user)
 
         return {
             ok: true,

@@ -42,7 +42,6 @@ export const RegisterPage = () => {
     if (!isFormValid) return;
 
 
-    console.log("enviando el formState desde registerPage", formState)
     dispatch(startCreatingUserWithEmailPassword(formState))
   }
 

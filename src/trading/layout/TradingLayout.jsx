@@ -7,16 +7,18 @@ const drawerWidth = 280;
 
 export const TradingLayout = ({ children }) => {
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box
+            sx={{ display: 'flex', minHeight: '100vh' }}
+        >
 
             <NavBar drawerWidth={drawerWidth} />
 
-            <SideBar drawerWidth={drawerWidth} />
+            {/* <SideBar drawerWidth={drawerWidth} /> */}
 
             <Box
                 className='animate__animated animate__fadeIn animate__faster'
                 component='main'
-                sx={{ flexGrow: 1, p: 3 }}
+                sx={{ flexGrow: 1 }}
             >
                 <Toolbar />
 

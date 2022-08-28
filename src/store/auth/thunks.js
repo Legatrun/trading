@@ -31,7 +31,6 @@ export const startCreatingUserWithEmailPassword = ({ email, password, displayNam
 
         const { ok, uid, photoURL, errorMessage } = await registeruserWithEmailPassword({ email, password, displayName, phoneNumber })
 
-        console.log("create: phoneNumber desde thunks", { phoneNumber })
 
         if (!ok) return dispatch(logout({ errorMessage }))
 
@@ -48,7 +47,6 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
 
         const { ok, uid, photoURL, displayName, phoneNumber, errorMessage } = await loginWithEmailPassword({ email, password })
 
-        console.log("login: phoneNumber desde thunks", { phoneNumber, displayName })
 
         if (!ok) return dispatch(logout({ errorMessage }))
 

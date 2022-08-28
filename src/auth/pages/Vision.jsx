@@ -31,7 +31,12 @@ export const Vision = () => {
                         ///
                     </div>
                     <Typography fontWeight={700} fontSize={{ xs: 30, sm: 56 }} sx={{ color: "#1DC5A3" }} className="titleHistoria">VISIÓN</Typography>
-                    <p className="historiaParrafo" >
+                    <Typography
+                        fontFamily="Raleway"
+                        fontWeight={{ xs: 300, sm: 400 }}
+                        fontSize={{ xs: 18, sm: 25 }}
+                        sx={{ color: "white" }}
+                    >
                         <strong>O</strong>frecer al <strong>mundo</strong>
                         <br />
                         la mejor experiencia digital,
@@ -43,7 +48,7 @@ export const Vision = () => {
                         <strong>C</strong>ontar con la mayor comunidad de
                         <br />
                         <strong>inversores prosperos</strong>.
-                    </p>
+                    </Typography>
                 </Grid>
                 <Grid
                     item
