@@ -1,12 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 export const tradingSlice = createSlice({
     name: 'trading',
     initialState: {
         isSaving: false,
         messageSaved: "",
         notes: [],
-        active: null
+        active: null,
+        number: null,
+        email: null,
+        precioDeLaLicencia: null,
+        date: null,
+        billetera: null
         // active: {
         //     id: 'ABC123',
         //     title: "",
@@ -28,7 +34,7 @@ export const tradingSlice = createSlice({
             state.messageSaved = ``
         },
         setNotes: (state, action) => {
-            state.notes = action.payload
+            state.billetera = action.payload
         },
         setSaving: (state) => {
             state.isSaving = true

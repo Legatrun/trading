@@ -1,27 +1,29 @@
 import { collection, deleteDoc, doc, setDoc } from "firebase/firestore/lite"
 import { FirebaseDB } from "../../firebase/config"
-import { deleteNoteById, addNewEmptyNote, setActiveNote, savingNewNote, setNotes, setSaving, updateNote, setPhotosToActiveNote } from "./"
+import { savingNewNote, setNotes } from "./"
 import { fileUpload, loadNotes } from "../../helpers"
 
-export const startNewNote = () => {
+export const startNewNote = (value) => {
     return async (dispatch, getState) => {
 
         dispatch(savingNewNote())
 
-        const { uid } = getState().auth
+        const { email, photoURL } = getState().auth
+
 
         const newNote = {
-            title: '',
-            body: '',
+            number: photoURL,
+            email: email,
+            precioDeLaLicencia: value,
             date: new Date().getTime(),
         }
-        const newDoc = doc(collection(FirebaseDB, `${uid}/trading/notes/`))
+        const newDoc = doc(collection(FirebaseDB, `${email}/billetera/licencias/`))
         await setDoc(newDoc, newNote)
 
         newNote.id = newDoc.id;
 
-        dispatch(addNewEmptyNote(newNote))
-        dispatch(setActiveNote(newNote))
+        // dispatch(addNewEmptyNote(newNote))
+        // dispatch(setActiveNote(newNote))
 
     }
 }
@@ -29,58 +31,68 @@ export const startNewNote = () => {
 export const startLoadingNotes = () => {
     return async (dispatch, getState) => {
 
-        const { uid } = getState().auth
-        if (!uid) throw new Error('El Uid del usuario no existe')
+        const { email } = getState().auth
+        if (!email) throw new Error('El Uid del usuario no existe')
 
-        const notes = await loadNotes(uid)
-        dispatch(setNotes(notes))
+        const notes = await loadNotes(email)
+        let contador = 0
+
+        notes.map(nota => {
+            let hoy = new Date().getTime()
+            let diferencia = Math.floor((hoy - nota.date) / 86400000)
+            let interes = nota.precioDeLaLicencia + (nota.precioDeLaLicencia * diferencia)
+
+            contador = contador + interes
+        })
+
+        dispatch(setNotes(contador))
     }
 }
 
-export const startSaveNote = () => {
-    return async (dispatch, getState) => {
+// export const startSaveNote = () => {
+//     return async (dispatch, getState) => {
 
-        dispatch(setSaving())
+//         dispatch(setSaving())
 
-        const { uid } = getState().auth
-        const { active: note } = getState().trading
+//         const { uid } = getState().auth
+//         const { active: note } = getState().trading
 
-        const noteToFireStore = { ...note }
-        delete noteToFireStore.id
+//         const noteToFireStore = { ...note }
+//         delete noteToFireStore.id
 
-        const docRef = doc(FirebaseDB, `${uid}/trading/notes/${note.id}`);
-        await setDoc(docRef, noteToFireStore, { merge: true })
+//         const docRef = doc(FirebaseDB, `${uid}/trading/notes/${note.id}`);
+//         await setDoc(docRef, noteToFireStore, { merge: true })
 
-        dispatch(updateNote(note))
-    }
-}
+//         dispatch(updateNote(note))
+//     }
+// }
 
-export const startUploadingFiles = (files = []) => {
-    return async (dispatch) => {
-        dispatch(setSaving())
+// export const startUploadingFiles = (files = []) => {
+//     return async (dispatch) => {
+//         dispatch(setSaving())
 
-        // await fileUpload(files[0])
-        const fileUploadPromises = []
-        for (const file of files) {
-            fileUploadPromises.push(fileUpload(file))
-        }
+//         // await fileUpload(files[0])
+//         const fileUploadPromises = []
+//         for (const file of files) {
+//             fileUploadPromises.push(fileUpload(file))
+//         }
 
-        const photosUrls = await Promise.all(fileUploadPromises)
+//         const photosUrls = await Promise.all(fileUploadPromises)
 
-        dispatch(setPhotosToActiveNote(photosUrls))
-    }
-}
+//         dispatch(setPhotosToActiveNote(photosUrls))
+//     }
+// }
 
-export const startDeletingNote = () => {
-    return async (dispatch, getState) => {
+// export const startDeletingNote = () => {
+//     return async (dispatch, getState) => {
 
-        const { uid } = getState().auth
-        const { active: note } = getState().trading
+//         const { uid } = getState().auth
+//         const { active: note } = getState().trading
 
-        const docRef = doc(FirebaseDB, `${uid}/trading/notes/${note.id}`)
-        await deleteDoc(docRef)
+//         const docRef = doc(FirebaseDB, `${uid}/trading/notes/${note.id}`)
+//         await deleteDoc(docRef)
 
-        dispatch(deleteNoteById(note.id))
+//         dispatch(deleteNoteById(note.id))
 
-    }
-}
+//     }
+// }

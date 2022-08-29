@@ -27,7 +27,7 @@
     let progress = document.getElementById('progressbar');
     let totalHeight = window.innerHeight - document.body.scrollHeight;
     window.onscroll = function () {
-      let progressHeight = (window.pageYOffset / totalHeight) * 500;
+      let progressHeight = (window.pageYOffset / totalHeight) * 100;
       progress.style.height = progressHeight + "%";
     }
   </script>
