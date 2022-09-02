@@ -57,7 +57,7 @@ export const Inicio = () => {
                         <Link
                             component={RouterLink}
                             color='#1DC5A3'
-                            to="/auth/register"
+                            to="/auth/register/0"
                             mx={2}
                             display={{ sm: 'flex' }}
                             className="singUp"

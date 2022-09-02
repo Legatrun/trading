@@ -5,7 +5,7 @@ import { useState } from "react";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css'
 import React from 'react'
-import { startNewNote } from '../../store/trading';
+import { comprarNuevaLicencia } from '../../store/trading';
 
 export const CardChild = ({ handleClose, value = 0 }) => {
 
@@ -22,7 +22,7 @@ export const CardChild = ({ handleClose, value = 0 }) => {
     const handleClose1 = () => {
         setOpen1(false);
         handleClose()
-        dispatch(startNewNote(value))
+        dispatch(comprarNuevaLicencia(value))
         Swal.fire('Su licencia puede tardar hasta 48hrs. en mostrarse en su panel', "gracias por su inversión", 'success')
     };
 
@@ -32,7 +32,7 @@ export const CardChild = ({ handleClose, value = 0 }) => {
     const handleClose2 = () => {
         setOpen2(false);
         handleClose()
-        dispatch(startNewNote(value))
+        dispatch(comprarNuevaLicencia(value))
         Swal.fire('Su licencia puede tardar hasta 48hrs. en mostrarse en su panel', "gracias por su inversión", 'success')
     };
 
@@ -42,7 +42,7 @@ export const CardChild = ({ handleClose, value = 0 }) => {
     const handleClose3 = () => {
         setOpen3(false);
         handleClose()
-        dispatch(startNewNote(value))
+        dispatch(comprarNuevaLicencia(value))
         Swal.fire('Su licencia puede tardar hasta 48hrs. en mostrarse en su panel', "gracias por su inversión", 'success')
     };
 
@@ -104,7 +104,7 @@ export const CardChild = ({ handleClose, value = 0 }) => {
                 <Box className="boxModal" pt={2} px={4} pb={3}>
                     <h2 id="child-modal-title">CUENTA DE BANCO</h2>
                     <p id="child-modal-description">
-                        Realize el deposito en la siguiente cuenta CUENTA DE BANCO:
+                        Realize el deposito en la siguiente cuenta CUENTA DE BANCO UNIÓN:
                     </p>
                     <p id="child-modal-description">
                         40-0-0654859-1

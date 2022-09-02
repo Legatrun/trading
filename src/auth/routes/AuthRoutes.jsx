@@ -12,7 +12,7 @@ export const AuthRoutes = () => {
       <Route path="login" element={<LoginPage />} />
       <Route path="mapa" element={<Referidos />} />
       <Route path="mision" element={<Mision />} />
-      <Route path="register" element={<RegisterPage />} />
+      <Route path="register/:id" element={<RegisterPage />} />
       <Route path="vision" element={<Vision />} />
 
       <Route path='/*' element={<Navigate to="/auth/home" />} />

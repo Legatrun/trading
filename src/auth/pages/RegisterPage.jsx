@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
@@ -24,6 +24,9 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const { id } = useParams();
+
+
   const dispatch = useDispatch()
 
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -40,9 +43,7 @@ export const RegisterPage = () => {
     event.preventDefault();
     setFormSubmitted(true)
     if (!isFormValid) return;
-
-
-    dispatch(startCreatingUserWithEmailPassword(formState))
+    dispatch(startCreatingUserWithEmailPassword(formState, id))
   }
 
   return (

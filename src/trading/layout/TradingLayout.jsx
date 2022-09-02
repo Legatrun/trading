@@ -1,6 +1,6 @@
 import { Toolbar } from '@mui/material';
 import { Box } from '@mui/system'
-import { NavBar, SideBar } from '../components';
+import { NavBar } from '../components';
 
 
 const drawerWidth = 280;
@@ -12,8 +12,6 @@ export const TradingLayout = ({ children }) => {
         >
 
             <NavBar drawerWidth={drawerWidth} />
-
-            {/* <SideBar drawerWidth={drawerWidth} /> */}
 
             <Box
                 className='animate__animated animate__fadeIn animate__faster'

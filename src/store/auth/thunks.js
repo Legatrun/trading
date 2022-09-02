@@ -1,5 +1,5 @@
 import { loginWithEmailPassword, logoutFirebase, registeruserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
-import { clearNotesLogout } from "../trading"
+import { anotarmeComoHijoDeMipadre, clearNotesLogout, crearColeccionDePatrocinadorYBilletera } from "../trading"
 import { checkingCredentials, logout, login } from "./"
 
 export const checkingAuthentication = (email, password) => {
@@ -24,7 +24,7 @@ export const startGoogleSignIn = () => {
     }
 }
 
-export const startCreatingUserWithEmailPassword = ({ email, password, displayName, phoneNumber }) => {
+export const startCreatingUserWithEmailPassword = ({ email, password, displayName, phoneNumber }, id) => {
     return async (dispatch) => {
 
         dispatch(checkingCredentials())
@@ -36,6 +36,9 @@ export const startCreatingUserWithEmailPassword = ({ email, password, displayNam
 
         dispatch(login({ uid, displayName, email, photoURL, phoneNumber }))
 
+        console.log({ uid })
+        dispatch(crearColeccionDePatrocinadorYBilletera(id, uid))
+        dispatch(anotarmeComoHijoDeMipadre(id, uid))
     }
 }
 
@@ -51,7 +54,6 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
         if (!ok) return dispatch(logout({ errorMessage }))
 
         dispatch(login({ uid, email, photoURL, displayName, phoneNumber }))
-
     }
 
 }

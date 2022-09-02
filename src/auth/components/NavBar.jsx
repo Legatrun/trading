@@ -54,7 +54,7 @@ export const NavBar = () => {
                         <Link
                             component={RouterLink}
                             color='#1DC5A3'
-                            to="/auth/register"
+                            to="/auth/register/0"
                             mx={2}
                             display={{ xs: 'none', sm: 'flex' }}
                             className="singUp"
@@ -115,7 +115,7 @@ export const NavBar = () => {
                         <Link
                             component={RouterLink}
                             color='white'
-                            to="/auth/register"
+                            to="/auth/register/0"
                             mx={2}
                             className="singUp"
                             underline="hover"
