@@ -1,15 +1,16 @@
 import { collection, deleteDoc, doc, setDoc, getDocs, updateDoc } from "firebase/firestore/lite"
 import { FirebaseDB } from "../../firebase/config"
-import { setLicenciasVigentes, setBilleteraLicencia, setBilleteraComision } from "./"
+import { setLicenciasVigentes, setBilleteraLicencia, setBilleteraComision, setRetiros, setReferidos } from "./"
 import { fileUpload, loadNotes } from "../../helpers"
 
 export const comprarNuevaLicencia = (value) => {
     return async (dispatch, getState) => {
-        const { uid, photoURL, email } = getState().auth
+        const { uid, displayName } = getState().auth
         const nuevaLicencia = {
-            state: true,
+            state: false,
             date: Math.floor((new Date().getTime()) / 86400000),
-            value: value
+            value: value,
+            name: displayName
         }
         const newLicenceDoc = doc(collection(FirebaseDB, `contacts/${uid}/licencias/`))
         await setDoc(newLicenceDoc, nuevaLicencia)
@@ -33,8 +34,51 @@ export const crearColeccionDePatrocinadorYBilletera = (id, uid) => {
 
         const crearBilletera = doc(collection(FirebaseDB, `contacts/${uid}/billetera`))
         await setDoc(crearBilletera, billetera)
+
     }
 }
+
+export const retirarDinero = (cuenta = 0, valor = 0) => {
+    const value = parseInt(valor, 10);
+    return async (dispatch, getState) => {
+        const { uid } = getState().auth
+        const nuevoRetiro = {
+            state: false,
+            date: Math.floor((new Date().getTime()) / 86400000),
+            cuenta: cuenta,
+            valor: value,
+        }
+        const nuevaColeccionRetiro = doc(collection(FirebaseDB, `contacts/${uid}/retiros/`))
+        await setDoc(nuevaColeccionRetiro, nuevoRetiro)
+    }
+}
+export const cargarRetiros = () => {
+    return async (dispatch, getState) => {
+        const { uid } = getState().auth
+        if (!uid) throw new Error('El Uid del usuario no existe')
+
+        const collectionRet = collection(FirebaseDB, `contacts/${uid}/retiros`)
+        const docs = await getDocs(collectionRet)
+
+        let retirosArray = []
+        let retiros = 0
+        docs.forEach(doc => {
+            retirosArray.push({ id: doc.id, ...doc.data() })
+        })
+
+        const retirosActivos = retirosArray.filter(retiro => retiro.state === true)
+        retirosActivos.map(retiro => {
+            retiros = retiros + retiro.valor
+        })
+        const ret = {
+            retirosArray,
+            retiros
+        }
+        dispatch(setRetiros(ret))
+    }
+}
+
+
 
 // id de mi padre
 export const anotarmeComoHijoDeMipadre = (id, uid) => {
@@ -56,27 +100,6 @@ export const anotarmeComoHijoDeMipadre = (id, uid) => {
             await setDoc(newDoc, newReferido, { merge: true })
         }
 
-    }
-}
-
-export const cargarBilletera = () => {
-    return async (dispatch, getState) => {
-
-        const { uid } = getState().auth
-        if (!uid) throw new Error('El Uid del usuario no existe')
-
-        const notes = await loadNotes(uid)
-        let contador = 0
-
-        notes.map(nota => {
-            let hoy = new Date().getTime()
-            let diferencia = Math.floor((hoy - nota.date) / 86400000)
-            let interes = nota.precioDeLaLicencia + (nota.precioDeLaLicencia * diferencia)
-
-            contador = contador + interes
-        })
-
-        dispatch(setNotes(contador))
     }
 }
 
@@ -125,7 +148,7 @@ export const cargarComisionesPorHijos = () => {
         if (hijos.length == 0) return
 
         //                                             PRIMER NIVEL
-
+        let referidos = []
         let billeteraComision = 0
         hijos.map(async hijo => {
             const collectionHijo1 = collection(FirebaseDB, `contacts/${hijo}/licencias`)
@@ -135,6 +158,7 @@ export const cargarComisionesPorHijos = () => {
                 if (licenciaHijo.state === true) {
                     billeteraComision = billeteraComision + (licenciaHijo.value * 0.1)
                 }
+                referidos.push({ name: licenciaHijo.name, nivel: 1, licencia: licenciaHijo.value })
             })
 
             //                              BUSCAR REFERIDOS NIVEL 2
@@ -147,6 +171,7 @@ export const cargarComisionesPorHijos = () => {
             })
             if (hijos2.length == 0) {
                 dispatch(setBilleteraComision(billeteraComision))
+                dispatch(setReferidos(referidos))
                 return
             }
             //                                          SEGUNDO NIVEL
@@ -158,6 +183,7 @@ export const cargarComisionesPorHijos = () => {
                     if (licenciaHijo2.state === true) {
                         billeteraComision = billeteraComision + (licenciaHijo2.value * 0.05)
                     }
+                    referidos.push({ name: licenciaHijo2.name, nivel: 2, licencia: licenciaHijo2.value })
                 })
 
                 //                              BUSCAR REFERIDOS NIVEL 3
@@ -170,6 +196,7 @@ export const cargarComisionesPorHijos = () => {
                 })
                 if (hijos3.length == 0) {
                     dispatch(setBilleteraComision(billeteraComision))
+                    dispatch(setReferidos(referidos))
                     return
                 }
                 //                                          TERCER NIVEL
@@ -182,6 +209,7 @@ export const cargarComisionesPorHijos = () => {
                         if (licenciaHijo.state === true) {
                             billeteraComision = billeteraComision + (licenciaHijo.value * 0.03)
                         }
+                        referidos.push({ name: licenciaHijo.name, nivel: 3, licencia: licenciaHijo.value })
                     })
 
                     //                              BUSCAR REFERIDOS NIVEL 4
@@ -194,6 +222,7 @@ export const cargarComisionesPorHijos = () => {
                     })
                     if (hijos4.length == 0) {
                         dispatch(setBilleteraComision(billeteraComision))
+                        dispatch(setReferidos(referidos))
                         return
                     }
                     //                              NIVEL 4 
@@ -206,6 +235,7 @@ export const cargarComisionesPorHijos = () => {
                             if (licenciaHijo.state === true) {
                                 billeteraComision = billeteraComision + (licenciaHijo.value * 0.02)
                             }
+                            referidos.push({ name: licenciaHijo.name, nivel: 4, licencia: licenciaHijo.value })
                         })
 
                         //                              BUSCAR REFERIDOS NIVEL 5
@@ -218,6 +248,7 @@ export const cargarComisionesPorHijos = () => {
                         })
                         if (hijos5.length == 0) {
                             dispatch(setBilleteraComision(billeteraComision))
+                            dispatch(setReferidos(referidos))
                             return
                         }
                         //                              NIVEL 5
@@ -229,6 +260,7 @@ export const cargarComisionesPorHijos = () => {
                                 if (licenciaHijo.state === true) {
                                     billeteraComision = billeteraComision + (licenciaHijo.value * 0.01)
                                 }
+                                referidos.push({ name: licenciaHijo.name, nivel: 5, licencia: licenciaHijo.value })
                             })
                             //                              BUSCAR REFERIDOS NIVEL 6
                             const collectionRef = collection(FirebaseDB, `contacts/${hijo}/referidos`)
@@ -240,6 +272,7 @@ export const cargarComisionesPorHijos = () => {
                             })
                             if (hijos6.length == 0) {
                                 dispatch(setBilleteraComision(billeteraComision))
+                                dispatch(setReferidos(referidos))
                                 return
                             }
                             //                              NIVEL 6
@@ -251,6 +284,7 @@ export const cargarComisionesPorHijos = () => {
                                     if (licenciaHijo.state === true) {
                                         billeteraComision = billeteraComision + (licenciaHijo.value * 0.01)
                                     }
+                                    referidos.push({ name: licenciaHijo.name, nivel: 6, licencia: licenciaHijo.value })
                                 })
                                 //                              BUSCAR REFERIDOS NIVEL 7
                                 const collectionRef = collection(FirebaseDB, `contacts/${hijo}/referidos`)
@@ -262,6 +296,7 @@ export const cargarComisionesPorHijos = () => {
                                 })
                                 if (hijos7.length == 0) {
                                     dispatch(setBilleteraComision(billeteraComision))
+                                    dispatch(setReferidos(referidos))
                                     return
                                 }
                                 //              NIVEL 7
@@ -273,8 +308,10 @@ export const cargarComisionesPorHijos = () => {
                                         if (licenciaHijo.state === true) {
                                             billeteraComision = billeteraComision + (licenciaHijo.value * 0.01)
                                         }
+                                        referidos.push({ name: licenciaHijo.name, nivel: 7, licencia: licenciaHijo.value })
                                     })
                                     dispatch(setBilleteraComision(billeteraComision))
+                                    dispatch(setReferidos(referidos))
                                 })
                             })
 

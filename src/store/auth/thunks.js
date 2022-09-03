@@ -36,7 +36,6 @@ export const startCreatingUserWithEmailPassword = ({ email, password, displayNam
 
         dispatch(login({ uid, displayName, email, photoURL, phoneNumber }))
 
-        console.log({ uid })
         dispatch(crearColeccionDePatrocinadorYBilletera(id, uid))
         dispatch(anotarmeComoHijoDeMipadre(id, uid))
     }

@@ -4,19 +4,14 @@ import { createSlice } from '@reduxjs/toolkit';
 export const tradingSlice = createSlice({
     name: 'trading',
     initialState: {
-        notes: [],
         email: null,
         date: null,
         licenciasVigentes: 0,
         billeteraPorLicencia: 0,
-        billeteraComision: 0
-        // active: {
-        //     id: 'ABC123',
-        //     title: "",
-        //     body: "",
-        //     date: 1234567,
-        //     imageUrls: [], //https://foto1.jpg
-        // }
+        billeteraComision: 0,
+        retiros: 0,
+        retirosArray: [],
+        referidos: []
     },
     reducers: {
         setLicenciasVigentes: (state, action) => {
@@ -27,6 +22,13 @@ export const tradingSlice = createSlice({
         },
         setBilleteraComision: (state, action) => {
             state.billeteraComision = action.payload
+        },
+        setRetiros: (state, action) => {
+            state.retirosArray = action.payload.retirosArray
+            state.retiros = action.payload.retiros
+        },
+        setReferidos: (state, action) => {
+            state.referidos = action.payload
         },
         // updateNote: (state, action) => {
         //     state.isSaving = false;
@@ -55,5 +57,7 @@ export const {
     setLicenciasVigentes,
     setBilleteraLicencia,
     setBilleteraComision,
+    setRetiros,
+    setReferidos,
     clearNotesLogout,
 } = tradingSlice.actions;

@@ -1,16 +1,59 @@
-import { Box, Button, Grid, IconButton, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputLabel, Link, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import { CardItem } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Telegram, WhatsApp } from '@mui/icons-material';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css'
+import React from 'react'
+import { useForm } from '../../hooks';
+import { retirarDinero } from '../../store/trading';
+import { Link as RouterLink } from "react-router-dom";
 
+const formData = {
+    cuenta: '',
+    valor: ''
+}
+
+const formValidations = {
+    cuenta: [(value) => value.length >= 1, 'La cuenta es obligatorio.'],
+    valor: [(value) => value.length > 1, 'El monto es obligatorio.'],
+}
 
 export const UserPage = () => {
+    const dispatch = useDispatch()
 
-    const { licenciasVigentes, billeteraPorLicencia, billeteraComision } = useSelector(state => state.trading)
+    const { licenciasVigentes, billeteraPorLicencia, billeteraComision, retiros } = useSelector(state => state.trading)
     const { uid } = useSelector(state => state.auth)
 
-    const billeteraTotal = billeteraPorLicencia + billeteraComision
+    const billeteraTotal = billeteraPorLicencia + billeteraComision - retiros
     const state = (billeteraTotal > 0) ? 'Activo' : 'Inactivo'
+
+    const {
+        cuenta, valor, onInputChange,
+        isFormValid, cuentaValid, valorValid, onResetForm
+    } = useForm(formData, formValidations)
+
+    const [formSubmitted, setFormSubmitted] = useState(false)
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setFormSubmitted(true)
+        if (!isFormValid) return;
+        setOpen(false);
+        if (billeteraTotal < valor) {
+            Swal.fire('No puede retirar un monto mayor al de su billetera', "debe comprar licencias", 'error')
+            return
+        }
+        dispatch(retirarDinero(cuenta, valor))
+        Swal.fire('Su retiro puede tardar hasta 48hrs. en mostrarse en su cuenta', "gracias por su inversión", 'success')
+        onResetForm()
+    };
+
+
 
     return (
         <Grid
@@ -24,6 +67,9 @@ export const UserPage = () => {
             <Grid
                 container
                 width={{ sm: 1200 }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
             >
                 <Grid
                     item
@@ -132,6 +178,81 @@ export const UserPage = () => {
                             <Telegram />
                         </IconButton>
                     </Grid>
+                </Grid>
+                <Grid item sm={4} >
+                    <Button variant="contained" onClick={handleOpen}>Retirar Dinero</Button>
+                </Grid>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="parent-modal-title"
+                    aria-describedby="parent-modal-description"
+                >
+                    <Box sx={{ width: 400 }} className="boxModal" pt={2} px={4} pb={3}>
+                        <form className='animate__animated animate__fadeIn animate__faster'>
+                            <Grid item xs={12}>
+                                <div className='ingresarTitlte'>Retirar</div>
+                            </Grid>
+                            <Grid item xs={12} sx={{ mt: 2 }} className="textField">
+                                <TextField
+                                    label="Cuenta"
+                                    type="text"
+                                    placeholder='anote con cuidado su cuenta'
+                                    fullWidth
+                                    name="cuenta"
+                                    value={cuenta}
+                                    onChange={onInputChange}
+                                    error={!!cuentaValid && formSubmitted}
+                                    helperText={cuentaValid}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} sx={{ mt: 2 }} className="textField">
+                                <TextField
+                                    label="Cantidad"
+                                    type="number"
+                                    placeholder='Cantidad a retirar'
+                                    fullWidth
+                                    name="valor"
+                                    value={valor}
+                                    onChange={onInputChange}
+                                    error={!!valorValid && formSubmitted}
+                                    helperText={valorValid}
+                                />
+                            </Grid>
+                        </form>
+                        <Button variant="contained" onClick={handleClose} sx={{ my: 1 }}>
+                            Enviar Solicitud
+                        </Button>
+                    </Box>
+                </Modal>
+                <Grid item sm={4}>
+                    <Button variant="contained">
+                        <Link
+                            display={{ xs: 'none', sm: 'flex' }}
+                            mx={2}
+                            component={RouterLink}
+                            to="/retiros"
+                            color='black'
+                            underline="hover"
+                        >
+                            <Typography fontSize="15px" px="2px">Ver retiros</Typography>
+                        </Link>
+                    </Button>
+                </Grid>
+                <Grid item sm={4}>
+                    <Button variant="contained">
+                        <Link
+                            display={{ xs: 'none', sm: 'flex' }}
+                            mx={2}
+                            component={RouterLink}
+                            to="/referidos"
+                            color='black'
+                            underline="hover"
+                        >
+                            <Typography fontSize="15px" px="2px">Ver referidos</Typography>
+                        </Link>
+                    </Button>
                 </Grid>
                 <Typography fontSize={{ xs: 30, sm: 45 }} textAlign="center" color="white" fontWeight="bold" >Seleccíone su plan de inversíon con 1,5% diario de lunes a lunes, 150 dias habiles</Typography>
                 <CardItem value={10} />

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FirebaseAuth } from '../firebase/config';
 import { login, logout } from '../store/auth';
-import { cargarLicenciasVigentes, cargarComisionesPorHijos } from '../store/trading';
+import { cargarLicenciasVigentes, cargarComisionesPorHijos, cargarRetiros } from '../store/trading';
 
 
 export const useCheckAuth = () => {
@@ -20,6 +20,7 @@ export const useCheckAuth = () => {
             dispatch(login({ uid, email, displayName, photoURL, phoneNumber }))
             dispatch(cargarLicenciasVigentes())
             dispatch(cargarComisionesPorHijos())
+            dispatch(cargarRetiros())
         })
     }, [])
 
