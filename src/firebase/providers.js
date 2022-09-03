@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, PhoneAuthProvider, RecaptchaVerifier, signInWithEmailAndPassword, signInWithPopup, updatePhoneNumber, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, PhoneAuthProvider, RecaptchaVerifier, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, updatePhoneNumber, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from './config'
 
 const googleProvider = new GoogleAuthProvider()
@@ -87,4 +87,15 @@ export const loginWithEmailPassword = async ({ email, password }) => {
 export const logoutFirebase = async () => {
     // "FirebaseAuth.signOut" cierra cualquier sesion de cualquier provider
     return await FirebaseAuth.signOut()
+}
+
+export const sendPasswordResetEmailFirebase = async (email) => {
+    // "FirebaseAuth.signOut" cierra cualquier sesion de cualquier provider
+    try {
+        const resp = await sendPasswordResetEmail(FirebaseAuth, email)
+        return resp
+
+    } catch (error) {
+        return error
+    }
 }

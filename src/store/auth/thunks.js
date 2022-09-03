@@ -1,4 +1,5 @@
-import { loginWithEmailPassword, logoutFirebase, registeruserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
+import { FirebaseAuth } from "../../firebase/config"
+import { loginWithEmailPassword, logoutFirebase, registeruserWithEmailPassword, sendPasswordResetEmailFirebase, singInWithGoogle } from "../../firebase/providers"
 import { anotarmeComoHijoDeMipadre, clearNotesLogout, crearColeccionDePatrocinadorYBilletera } from "../trading"
 import { checkingCredentials, logout, login } from "./"
 
@@ -63,4 +64,13 @@ export const startLogout = () => {
         dispatch(clearNotesLogout())
         dispatch(logout())
     }
+}
+
+//reset password
+export const sendEmailResetPassword = ({ email }) => {
+
+    return async (dispatch) => {
+        const resp = await sendPasswordResetEmailFirebase(email)
+    }
+
 }

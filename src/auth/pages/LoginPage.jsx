@@ -110,7 +110,10 @@ export const LoginPage = () => {
             </Grid>
           </Grid>
 
-          <Grid container direction='row' justifyContent='end'>
+          <Grid container direction='row' justifyContent='space-between'>
+            <Link component={RouterLink} color='inherit' to="/auth/forgetPassword">
+              Olvidaste tu contraseña?
+            </Link>
             <Link component={RouterLink} color='inherit' to="/auth/register">
               Crear una cuenta
             </Link>

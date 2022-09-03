@@ -9,3 +9,5 @@ export * from './Mision'
 export * from './RegisterPage';
 export * from './Vision'
 export * from './Inicio'
+
+export * from './ForgetPassword'
