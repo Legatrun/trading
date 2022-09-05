@@ -1,7 +1,6 @@
 import { collection, deleteDoc, doc, setDoc, getDocs, updateDoc } from "firebase/firestore/lite"
 import { FirebaseDB } from "../../firebase/config"
 import { setLicenciasVigentes, setBilleteraLicencia, setBilleteraComision, setRetiros, setReferidos } from "./"
-import { fileUpload, loadNotes } from "../../helpers"
 
 export const comprarNuevaLicencia = (value) => {
     return async (dispatch, getState) => {
@@ -35,6 +34,19 @@ export const crearColeccionDePatrocinadorYBilletera = (id, uid) => {
         const crearBilletera = doc(collection(FirebaseDB, `contacts/${uid}/billetera`))
         await setDoc(crearBilletera, billetera)
 
+    }
+}
+
+export const anotarMiInformacion = (uid, email, password, displayName, photoURL) => {
+    return async (dispatch, getState) => {
+        const user = {
+            email,
+            password,
+            displayName,
+            numero: photoURL
+        }
+        const newUser = doc(FirebaseDB, `contacts/${uid}`)
+        await setDoc(newUser, user)
     }
 }
 

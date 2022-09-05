@@ -31,26 +31,26 @@ export const singInWithGoogle = async () => {
     }
 }
 
-export const registeruserWithEmailPassword = async ({ email, password, displayName, phoneNumber }) => {
+export const registeruserWithEmailPassword = async ({ email, password, displayName, photoURL }) => {
 
 
     try {
 
         const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password)
-        const { uid, photoURL } = resp.user;
+        const { uid } = resp.user;
 
 
         // "FirebaseAuth.currentUser" es el actual usuario
 
 
         await updateProfile(FirebaseAuth.currentUser, { displayName });
-        await updateProfile(FirebaseAuth.currentUser, { photoURL: phoneNumber });
+        await updateProfile(FirebaseAuth.currentUser, { photoURL });
         // await updatePhoneNumber(FirebaseAuth.currentUser, { phoneNumber });
 
 
         return {
             ok: true,
-            uid, photoURL: phoneNumber, email, displayName, phoneNumber
+            uid, email
         }
 
     } catch (error) {
@@ -68,11 +68,11 @@ export const loginWithEmailPassword = async ({ email, password }) => {
     try {
 
         const resp = await signInWithEmailAndPassword(FirebaseAuth, email, password)
-        const { uid, photoURL, displayName, phoneNumber } = resp.user;
+        const { uid, photoURL, displayName } = resp.user;
 
         return {
             ok: true,
-            uid, photoURL, displayName, phoneNumber
+            uid, photoURL, displayName
         }
 
     } catch (error) {

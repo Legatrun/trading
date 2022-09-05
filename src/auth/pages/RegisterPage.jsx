@@ -12,14 +12,14 @@ const formData = {
   email: '',
   password: '',
   displayName: '',
-  phoneNumber: ''
+  photoURL: ''
 }
 
 const formValidations = {
   email: [(value) => value.includes('@'), 'El correo debe tener una @.'],
   password: [(value) => value.length >= 6, 'El password debe tener mas de 6 letras.'],
   displayName: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
-  phoneNumber: [(value) => value.length == 8, 'El número debe tener 8 digitos.'],
+  photoURL: [(value) => value.length == 8, 'El número debe tener 8 digitos.'],
 }
 
 export const RegisterPage = () => {
@@ -35,8 +35,8 @@ export const RegisterPage = () => {
   const isCheckingAuthentication = useMemo(() => status === 'checking', [status])
 
   const {
-    formState, displayName, email, password, phoneNumber, onInputChange,
-    isFormValid, displayNameValid, emailValid, passwordValid, phoneNumberValid
+    formState, displayName, email, password, photoURL, onInputChange,
+    isFormValid, displayNameValid, emailValid, passwordValid, photoURLValid
   } = useForm(formData, formValidations)
 
   const onSubmit = (event) => {
@@ -111,11 +111,11 @@ export const RegisterPage = () => {
               type="number"
               placeholder="Número de celular"
               fullWidth
-              name="phoneNumber"
-              value={phoneNumber}
+              name="photoURL"
+              value={photoURL}
               onChange={onInputChange}
-              error={!!phoneNumberValid && formSubmitted}
-              helperText={phoneNumberValid}
+              error={!!photoURLValid && formSubmitted}
+              helperText={photoURLValid}
             />
           </Grid>
 

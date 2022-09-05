@@ -17,7 +17,7 @@ const formData = {
 
 const formValidations = {
     cuenta: [(value) => value.length >= 1, 'La cuenta es obligatorio.'],
-    valor: [(value) => value.length > 1, 'El monto es obligatorio.'],
+    valor: [(value) => value.length >= 1, 'El monto es obligatorio.'],
 }
 
 export const UserPage = () => {

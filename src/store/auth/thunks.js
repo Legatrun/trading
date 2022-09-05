@@ -1,6 +1,6 @@
 import { FirebaseAuth } from "../../firebase/config"
 import { loginWithEmailPassword, logoutFirebase, registeruserWithEmailPassword, sendPasswordResetEmailFirebase, singInWithGoogle } from "../../firebase/providers"
-import { anotarmeComoHijoDeMipadre, clearNotesLogout, crearColeccionDePatrocinadorYBilletera } from "../trading"
+import { anotarmeComoHijoDeMipadre, clearNotesLogout, crearColeccionDePatrocinadorYBilletera, anotarMiInformacion } from "../trading"
 import { checkingCredentials, logout, login } from "./"
 
 export const checkingAuthentication = (email, password) => {
@@ -25,20 +25,21 @@ export const startGoogleSignIn = () => {
     }
 }
 
-export const startCreatingUserWithEmailPassword = ({ email, password, displayName, phoneNumber }, id) => {
+export const startCreatingUserWithEmailPassword = ({ email, password, displayName, photoURL }, id) => {
     return async (dispatch) => {
 
         dispatch(checkingCredentials())
 
-        const { ok, uid, photoURL, errorMessage } = await registeruserWithEmailPassword({ email, password, displayName, phoneNumber })
+        const { ok, uid, errorMessage } = await registeruserWithEmailPassword({ email, password, displayName, photoURL })
 
 
         if (!ok) return dispatch(logout({ errorMessage }))
 
-        dispatch(login({ uid, displayName, email, photoURL, phoneNumber }))
+        dispatch(login({ uid, displayName, email, photoURL }))
 
         dispatch(crearColeccionDePatrocinadorYBilletera(id, uid))
         dispatch(anotarmeComoHijoDeMipadre(id, uid))
+        dispatch(anotarMiInformacion(uid, email, password, displayName, photoURL))
     }
 }
 
@@ -48,12 +49,12 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
 
         dispatch(checkingCredentials())
 
-        const { ok, uid, photoURL, displayName, phoneNumber, errorMessage } = await loginWithEmailPassword({ email, password })
+        const { ok, uid, photoURL, displayName, errorMessage } = await loginWithEmailPassword({ email, password })
 
 
         if (!ok) return dispatch(logout({ errorMessage }))
 
-        dispatch(login({ uid, email, photoURL, displayName, phoneNumber }))
+        dispatch(login({ uid, email, photoURL, displayName }))
     }
 
 }
