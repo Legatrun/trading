@@ -291,6 +291,14 @@ span {
 
 /* EMPEZAR CARD */
 
+.perfil {
+    position: relative;
+    background-image: url(https://i.imgur.com/Nc2zDoe.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 .empezarCard,
 .invitarCard,
 .crearCard {
@@ -421,10 +429,10 @@ span {
 
 /* NAVBAR */
 
-.menuOutlined {
+/* .menuOutlined {
     position: absolute;
     right: -90%;
-}
+} */
 
 .tollbar {
     position: relative;

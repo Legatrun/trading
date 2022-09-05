@@ -17,7 +17,7 @@ const formData = {
 
 const formValidations = {
     cuenta: [(value) => value.length >= 1, 'La cuenta es obligatorio.'],
-    valor: [(value) => value.length >= 1, 'El monto es obligatorio.'],
+    valor: [(value) => value >= 50, 'El monto mínimo es 50.'],
 }
 
 export const UserPage = () => {
@@ -226,34 +226,6 @@ export const UserPage = () => {
                         </Button>
                     </Box>
                 </Modal>
-                <Grid item sm={4}>
-                    <Button variant="contained">
-                        <Link
-                            display={{ xs: 'none', sm: 'flex' }}
-                            mx={2}
-                            component={RouterLink}
-                            to="/retiros"
-                            color='black'
-                            underline="hover"
-                        >
-                            <Typography fontSize="15px" px="2px">Ver retiros</Typography>
-                        </Link>
-                    </Button>
-                </Grid>
-                <Grid item sm={4}>
-                    <Button variant="contained">
-                        <Link
-                            display={{ xs: 'none', sm: 'flex' }}
-                            mx={2}
-                            component={RouterLink}
-                            to="/referidos"
-                            color='black'
-                            underline="hover"
-                        >
-                            <Typography fontSize="15px" px="2px">Ver referidos</Typography>
-                        </Link>
-                    </Button>
-                </Grid>
                 <Typography fontSize={{ xs: 30, sm: 45 }} textAlign="center" color="white" fontWeight="bold" >Seleccíone su plan de inversíon con 1,5% diario de lunes a lunes, 150 dias habiles</Typography>
                 <CardItem value={10} />
                 <CardItem value={25} />

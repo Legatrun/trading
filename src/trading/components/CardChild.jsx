@@ -104,7 +104,7 @@ export const CardChild = ({ handleClose, value = 0 }) => {
                 <Box className="boxModal" pt={2} px={4} pb={3}>
                     <h2 id="child-modal-title">CUENTA DE BANCO</h2>
                     <p id="child-modal-description">
-                        Realize el deposito en la siguiente cuenta CUENTA DE BANCO UNIÓN:
+                        Realize el deposito en la siguiente cuenta CUENTA DE BANCO FIE:
                     </p>
                     <p id="child-modal-description">
                         40-0-0654859-1
