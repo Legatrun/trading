@@ -33,7 +33,7 @@ export const Informacion = () => {
                     </Grid>
                     <Grid
                         container
-                        height="30%"
+                        minHeight="30%"
                         borderRadius={2}
                     >
                         <Grid item xs={12}>

@@ -11,7 +11,8 @@ export const tradingSlice = createSlice({
         billeteraComision: 0,
         retiros: 0,
         retirosArray: [],
-        referidos: []
+        referidos: [],
+        licencias: []
     },
     reducers: {
         setLicenciasVigentes: (state, action) => {
@@ -29,6 +30,9 @@ export const tradingSlice = createSlice({
         },
         setReferidos: (state, action) => {
             state.referidos = action.payload
+        },
+        setLicencias: (state, action) => {
+            state.licencias = action.payload
         },
         // updateNote: (state, action) => {
         //     state.isSaving = false;
@@ -59,5 +63,6 @@ export const {
     setBilleteraComision,
     setRetiros,
     setReferidos,
+    setLicencias,
     clearNotesLogout,
 } = tradingSlice.actions;

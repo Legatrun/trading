@@ -36,7 +36,7 @@ export const Retiros = () => {
                     </Grid>
                     <Grid
                         container
-                        height="30%"
+                        minHeight="30%"
                         bgcolor="white"
                         borderRadius={2}
                     >

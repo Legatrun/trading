@@ -120,6 +120,16 @@ export const NavBar = () => {
                         <Link
                             component={RouterLink}
                             color='black'
+                            to="/licencias"
+                            mx={2}
+                            className="singUp"
+                            underline="hover"
+                        >
+                            <Typography fontSize="12px" px="2px">Licencias</Typography>
+                        </Link>
+                        <Link
+                            component={RouterLink}
+                            color='black'
                             to="/informacion"
                             mx={2}
                             className="singUp"

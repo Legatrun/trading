@@ -33,7 +33,7 @@ export const AdminPage = () => {
                     <Typography fontSize={35} fontWeight="bold" textAlign="center">Admin</Typography>
                     <Grid
                         container
-                        height="30%"
+                        minHeight="30%"
                         bgcolor="white"
                         borderRadius={2}
                     >

@@ -1,23 +1,14 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import { TradingLayout } from '../layout/TradingLayout'
+import { Button, Grid, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { LicenciaItem } from '../components';
 
-import { Button, Grid, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { cargarLicenciasAdmin } from '../../store/admin/thunks';
-import { useEffect } from 'react';
-import { LicenciaAdminItem } from '../components';
+export const Licencias = () => {
 
-export const LicenciasAdmin = () => {
+    const { licencias } = useSelector(state => state.trading)
 
-    const { uid } = useParams();
     const navigate = useNavigate();
-    const dispatch = useDispatch()
-
-    const { licenciasUser } = useSelector(state => state.admin)
-
-    useEffect(() => {
-        dispatch(cargarLicenciasAdmin(uid))
-    }, [])
 
     const onNavigateBack = () => {
         navigate(-1);
@@ -50,25 +41,24 @@ export const LicenciasAdmin = () => {
                         borderRadius={2}
                     >
                         <Grid item xs={4}>
-                            <Typography fontWeight="bold">Nom.</Typography>
+                            <Typography fontWeight="bold">Fecha com.</Typography>
                         </Grid>
                         <Grid item xs={2}>
                             <Typography fontWeight="bold">Valor</Typography>
                         </Grid>
                         <Grid item xs={2}>
-                            <Typography fontWeight="bold">Estado</Typography>
+                            <Typography fontWeight="bold">Días trans.</Typography>
                         </Grid>
                         <Grid item xs={2}>
-                            <Typography fontWeight="bold">Fecha</Typography>
+                            <Typography fontWeight="bold">Total gene.</Typography>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Typography fontWeight="bold">Estado</Typography>
                         </Grid>
                         <Grid item xs={12}>
                             {
-                                licenciasUser.map(licencia => (
-                                    <LicenciaAdminItem
-                                        key={licencia.id}
-                                        uid={uid}
-                                        {...licencia}
-                                    />
+                                licencias.map((licencia, index) => (
+                                    <LicenciaItem key={index} {...licencia} />
                                 ))
                             }
                         </Grid>
@@ -80,6 +70,7 @@ export const LicenciasAdmin = () => {
                     </Grid>
                 </Grid>
             </Grid>
+
         </TradingLayout>
     )
 }

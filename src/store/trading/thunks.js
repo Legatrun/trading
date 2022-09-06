@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, setDoc, getDocs, updateDoc } from "firebase/firestore/lite"
 import { FirebaseDB } from "../../firebase/config"
-import { setLicenciasVigentes, setBilleteraLicencia, setBilleteraComision, setRetiros, setReferidos } from "./"
+import { setLicenciasVigentes, setBilleteraLicencia, setBilleteraComision, setRetiros, setReferidos, setLicencias } from "./"
 
 export const comprarNuevaLicencia = (value) => {
     return async (dispatch, getState) => {
@@ -124,15 +124,21 @@ export const cargarLicenciasVigentes = () => {
         const docs = await getDocs(collectionRef)
 
         let licencias = []
+        let billeteraPorLicencia = 0
+        let licenciasVigentes = 0
         docs.forEach(doc => {
             licencias.push({ ...doc.data() })
         })
         let hoy = Math.floor((new Date().getTime()) / 86400000)
+        const licenciasPasadas = licencias.filter(licencia => (
+            (licencia.state === true) && ((hoy - licencia.date) > 150)
+        ))
+        licenciasPasadas.map(licencia => {
+            billeteraPorLicencia = billeteraPorLicencia + Math.floor(2.25 * licencia.value);
+        })
         const licenciasActivas = licencias.filter(licencia => (
             (licencia.state === true) && ((hoy - licencia.date) < 150)
         ))
-        let licenciasVigentes = 0
-        let billeteraPorLicencia = 0
         licenciasActivas.map(licencia => {
             licenciasVigentes = licenciasVigentes + licencia.value
             billeteraPorLicencia = billeteraPorLicencia + Math.floor((hoy - licencia.date) * 0.015 * licencia.value);
@@ -140,6 +146,7 @@ export const cargarLicenciasVigentes = () => {
 
         dispatch(setLicenciasVigentes(licenciasVigentes))
         dispatch(setBilleteraLicencia(billeteraPorLicencia))
+        dispatch(setLicencias(licencias))
     }
 }
 
